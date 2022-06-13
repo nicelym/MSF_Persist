@@ -68,8 +68,6 @@ end
 function PERSIST:_LoadState()
     _MSF:Load(self.Path .. 'GROUPS', 'Optional')
 
-    if not GROUPS then GROUPS = {} end
-
     return self
 end
 
