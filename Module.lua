@@ -87,9 +87,10 @@ function PERSIST:_UpdateState()
     self:GetSet():
 
     ForEach(function(Group)
-        --if not Group:IsSave() then return end
-
         local Name = Group:GetName()
+
+        if self.IgnoredGroups[Name] then return end
+
         local Units = Group:GetUnits()
 
         GROUPS[Name] = {}
@@ -122,7 +123,7 @@ function PERSIST:_RemoveGroups()
     GroupSet:
 
     ForEach(function(Group)
-        --if not Group:IsSave() then return end
+        if self.IgnoredGroups[Group:GetName()] then return end
 
         Group:Destroy()
     end)
