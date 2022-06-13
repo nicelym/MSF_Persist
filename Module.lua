@@ -156,6 +156,8 @@ function PERSIST:Start()
     end
 
     self.ScheduleId = self:ScheduleRepeat(self.Schedule, self._UpdateState, self)
+
+    return self
 end
 
 function PERSIST:Stop()
