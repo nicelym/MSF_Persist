@@ -6,7 +6,8 @@
 PERSIST = {
     ClassName = 'PERSIST',
     Schedule = 60,
-    Path = [[Persist\States\]]
+    Path = [[Persist\States\]],
+    IgnoredGroups = {}
 }
 
 --function GROUP:SetSave(IsSave)
