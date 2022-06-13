@@ -12,6 +12,8 @@ PERSIST = {
     CanDrive = true
 }
 
+--- Ignore a group from state tracking.
+---@return self
 function PERSIST:IgnoreGroup(Group)
     if not Group.GetClassName then return end
     if not Group:GetClassName() == 'GROUP' then return end
@@ -21,6 +23,8 @@ function PERSIST:IgnoreGroup(Group)
     return self
 end
 
+--- Track a group that was previously ignored.
+---@return self
 function PERSIST:TrackGroup(Group)
     if not Group.GetClassName then return end
     if not Group:GetClassName() == 'GROUP' then return end
@@ -30,12 +34,16 @@ function PERSIST:TrackGroup(Group)
     return self
 end
 
+--- Instantiate a new PERSIST object.
+---@return self
 function PERSIST:New()
     local self = BASE:Inherit(self, BASE:New())
 
     return self
 end
 
+--- Set the rate in seconds that the state is saved.
+---@return self
 function PERSIST:SetSchedule(Seconds)
     if not type(Seconds) == 'number' then return end
 
@@ -44,12 +52,16 @@ function PERSIST:SetSchedule(Seconds)
     return self
 end
 
+--- Set skill of units.
+---@return self
 function PERSIST:SetSkill(Skill)
     self.Skill = Skill
 
     return self
 end
 
+--- Set if players can drive units or not.
+---@return self
 function PERSIST:SetCanDrive(CanDrive)
     if not type(CanDrive) == 'boolean' then return end
 
@@ -58,18 +70,24 @@ function PERSIST:SetCanDrive(CanDrive)
     return self
 end
 
+--- Set the path for state saving.
+---@return self
 function PERSIST:SetPath(Path)
     self.Path = Path
 
     return self
 end
 
+--- Load the state from file.
+---@return self
 function PERSIST:_LoadState()
     _MSF:Load(self.Path .. 'GROUPS', 'Optional')
 
     return self
 end
 
+--- Save the state to file.
+---@return self
 function PERSIST:_SaveState()
     if GROUPS then
         ROUTINES.file.EDSerializeToFile(_MSF.OptionalDirectory .. self.Path, 'GROUPS', GROUPS)
@@ -78,6 +96,8 @@ function PERSIST:_SaveState()
     return self
 end
 
+--- Update the state from group set and save.
+---@return
 function PERSIST:_UpdateState()
     GROUPS = {}
 
@@ -108,12 +128,18 @@ function PERSIST:_UpdateState()
     end)
 
     self:_SaveState()
+
+    return self
 end
 
+--- Get a ground unit Set.
+---@return SET
 function PERSIST:GetSet()
     return SET:CreateFrom('Groups'):FilterCategory(Group.Category.GROUND)
 end
 
+--- Remove all groups from mission.
+---@return self
 function PERSIST:_RemoveGroups()
     local GroupSet = self:GetSet()
 
@@ -128,6 +154,8 @@ function PERSIST:_RemoveGroups()
     return self
 end
 
+--- Generate the new groups from GROUPS and spawn.
+---@return self
 function PERSIST:_SpawnGroups()
     if not GROUPS then return end
 
@@ -146,6 +174,8 @@ function PERSIST:_SpawnGroups()
     return self
 end
 
+--- Start the Persist module
+---@return self
 function PERSIST:Start()
     self:_LoadState()
 
@@ -159,6 +189,8 @@ function PERSIST:Start()
     return self
 end
 
+--- Stop the Persist module.
+---@return self
 function PERSIST:Stop()
     if not self.ScheduleId then return end
 
