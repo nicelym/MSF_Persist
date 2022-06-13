@@ -150,7 +150,7 @@ end
 function PERSIST:Start()
     self:_LoadState()
 
-    if ROUTINES.util.size(GROUPS) ~= 0 then
+    if GROUPS then
         self:_RemoveGroups()
         self:_SpawnGroups()
     end
