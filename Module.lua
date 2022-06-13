@@ -10,19 +10,23 @@ PERSIST = {
     IgnoredGroups = {}
 }
 
---function GROUP:SetSave(IsSave)
---    if not type(IsSave) == 'boolean' then return nil end
---
---    self.Save = IsSave
---
---    return self
---end
---
---function GROUP:IsSave()
---    if self.save == nil then return true end
---
---    return self.Save
---end
+function PERSIST:IgnoreGroup(Group)
+    if not Group.GetClassName then return end
+    if not Group:GetClassName() == 'GROUP' then return end
+
+    self.IgnoredGroups[Group:GetName()] = true
+
+    return self
+end
+
+function PERSIST:TrackGroup(Group)
+    if not Group.GetClassName then return end
+    if not Group:GetClassName() == 'GROUP' then return end
+
+    self.IgnoredGroups[Group:GetName()] = nil
+
+    return self
+end
 
 function PERSIST:New()
     local self = BASE:Inherit(self, BASE:New())
