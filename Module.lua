@@ -7,7 +7,9 @@ PERSIST = {
     ClassName = 'PERSIST',
     Schedule = 60,
     Path = [[Persist\States\]],
-    IgnoredGroups = {}
+    IgnoredGroups = {},
+    Skill = 'Average',
+    CanDrive = true
 }
 
 function PERSIST:IgnoreGroup(Group)
@@ -30,9 +32,6 @@ end
 
 function PERSIST:New()
     local self = BASE:Inherit(self, BASE:New())
-
-    self.Skill = 'Average'
-    self.CanDrive = true
 
     return self
 end
