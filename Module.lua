@@ -12,6 +12,14 @@ PERSIST = {
     CanDrive = true
 }
 
+--- Instantiate a new PERSIST object.
+---@return self
+function PERSIST:New()
+    local self = BASE:Inherit(self, BASE:New())
+
+    return self
+end
+
 --- Ignore a group from state tracking.
 ---@return self
 function PERSIST:IgnoreGroup(Group)
@@ -30,14 +38,6 @@ function PERSIST:TrackGroup(Group)
     if not Group:GetClassName() == 'GROUP' then return end
 
     self.IgnoredGroups[Group:GetName()] = nil
-
-    return self
-end
-
---- Instantiate a new PERSIST object.
----@return self
-function PERSIST:New()
-    local self = BASE:Inherit(self, BASE:New())
 
     return self
 end
