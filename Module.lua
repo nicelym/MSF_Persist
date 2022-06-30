@@ -110,20 +110,20 @@ function PERSIST:_UpdateState()
 
         local Units = Group:GetUnits()
 
+        if not Units or ROUTINES.util.size(Units) == 0 then return end
+
         GROUPS[Name] = {}
 
-        if Units then
-            for _, Unit in pairs(Units) do
-                local UnitState = {
-                    Name = Unit:GetName(),
-                    Vec3 = Unit:GetVec3(),
-                    Type = Unit:GetType(),
-                    Heading = math.rad(Unit:GetHeading()),
-                    Country = Unit:GetCountry()
-                }
+        for _, Unit in pairs(Units) do
+            local UnitState = {
+                Name = Unit:GetName(),
+                Vec3 = Unit:GetVec3(),
+                Type = Unit:GetType(),
+                Heading = math.rad(Unit:GetHeading()),
+                Country = Unit:GetCountry()
+            }
 
-                table.insert(GROUPS[Name], UnitState)
-            end
+            table.insert(GROUPS[Name], UnitState)
         end
     end)
 
